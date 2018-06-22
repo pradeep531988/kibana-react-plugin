@@ -1,34 +1,41 @@
-import moment from 'moment';
 import { uiModules } from 'ui/modules';
 import uiRoutes from 'ui/routes';
 
 import 'ui/autoload/styles';
 import './less/main.less';
-import template from './templates/index.html';
+import React from 'react';
+import chrome from 'ui/chrome';
+import { render, unmountComponentAtNode } from 'react-dom';
+import { Main } from './components/main';
 
 uiRoutes.enable();
-uiRoutes
-  .when('/', {
-    template,
-    resolve: {
-      currentTime($http) {
-        return $http.get('../api/flip-plugin/example').then(function (resp) {
-          return resp.data.time;
-        });
-      }
-    }
-  });
+const app = uiModules.get('apps/flip-plugin', []);
+app.directive('homeApp', function (reactDirective) {
+  return reactDirective(Main);
+});
 
-uiModules
-  .get('app/flip-plugin', [])
-  .controller('flipPluginHelloWorld', function ($scope, $route, $interval) {
-    $scope.title = 'Flip Plugin';
-    $scope.description = 'This plugin is used to enhance the Kibana application with the option to display the projects based on roles and filter the dashboard with the roles';
-
-    const currentTime = moment($route.current.locals.currentTime);
-    $scope.currentTime = currentTime.format('HH:mm:ss');
-    const unsubscribe = $interval(function () {
-      $scope.currentTime = currentTime.add(1, 'second').format('HH:mm:ss');
-    }, 1000);
-    $scope.$watch('$destroy', unsubscribe);
+app.config($locationProvider => {
+  $locationProvider.html5Mode({
+    enabled: false,
+    requireBase: false,
+    rewriteLinks: false,
   });
+});
+app.config(stateManagementConfigProvider =>
+  stateManagementConfigProvider.disable()
+);
+
+function RootController($scope, $element, $http) {
+  console.log($element);
+  const domNode = document.getElementsByClassName("app-wrapper-panel")[0];
+
+  // render react to DOM
+  render(<Main title="flip-react-plugin" httpClient={$http} />, domNode);
+
+  // unmount react on controller destroy
+  $scope.$on('$destroy', () => {
+    unmountComponentAtNode(domNode);
+  });
+}
+
+chrome.setRootController('flipReactPlugin', RootController);
