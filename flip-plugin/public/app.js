@@ -7,10 +7,12 @@ import React from 'react';
 import chrome from 'ui/chrome';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { Main } from './components/main';
+import 'ui/private';
+import { FeatureCatalogueRegistryProvider, FeatureCatalogueCategory } from 'ui/registry/feature_catalogue';
 
 uiRoutes.enable();
 const app = uiModules.get('apps/flip-plugin', []);
-app.directive('homeApp', function (reactDirective) {
+app.directive('flipApp', function (reactDirective) {
   return reactDirective(Main);
 });
 
@@ -25,12 +27,11 @@ app.config(stateManagementConfigProvider =>
   stateManagementConfigProvider.disable()
 );
 
-function RootController($scope, $element, $http) {
-  console.log($element);
+function RootController($scope, $element, $http, Private) {
+  //console.log(Private(FeatureCatalogueRegistryProvider));
   const domNode = document.getElementsByClassName("app-wrapper-panel")[0];
-
   // render react to DOM
-  render(<Main title="flip-react-plugin" httpClient={$http} />, domNode);
+  render(<Main title="Flip Application" httpClient={$http}  directories={Private(FeatureCatalogueRegistryProvider)} />, domNode);
 
   // unmount react on controller destroy
   $scope.$on('$destroy', () => {

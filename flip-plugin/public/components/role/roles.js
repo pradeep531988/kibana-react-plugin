@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Synopsis } from './synopsis';
+import { Synopsis } from '../synopsis/synopsis';
 import {
   EuiTabs,
   EuiTab,

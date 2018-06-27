@@ -1,38 +1,53 @@
 import React from 'react';
-import { Roles } from '../role/roles';
+import { Home } from '../home/home';
+import '../../less/main.less';
 import PropTypes from 'prop-types';
-import { FeatureCatalogueRegistryProvider } from 'ui/registry/feature_catalogue';
-import chrome from 'ui/chrome';
+import { FlipConstants } from '../../const/flip_constants';
+import '../../const/feature_registry';
+import {
+  HashRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
 
 import {
-  EuiPage,
-  EuiPageHeader,
-  EuiTitle,
-  EuiPageBody,
-  EuiPageContent,
-  EuiPageContentHeader,
-  EuiPageContentBody,
-  EuiText,
-  EuiTabs,
-  EuiTab,
-  EuiFlexItem,
-  EuiFlexGrid,
-  EuiSpacer
+  EuiPage
 } from '@elastic/eui';
+
+import { FeatureCatalogueRegistryProvider, FeatureCatalogueCategory } from 'ui/registry/feature_catalogue';
+
 
 export class Main extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props.directories);
     this.state = {
 
-      directories: [ { id: 1,
-        title: 'Test',
+      directories: [{ id: 1,
+        title: 'Dashboard',
         description: 'Test',
         icon: 'Test',
-        path: 'Test',
+        path: 'kibana#/dashboard',
+        showOnHomePage: true,
+        category: 'Test' }, { id: 2,
+        title: 'Discover',
+        description: 'Test',
+        icon: 'Test',
+        path: 'kibana#/discover',
+        showOnHomePage: true,
+        category: 'Test' }, { id: 3,
+        title: 'Visualize',
+        description: 'Test',
+        icon: 'Test',
+        path: 'kibana#/visualize',
+        showOnHomePage: true,
+        category: 'Test' }, { id: 4,
+        title: 'Monitoring',
+        description: 'Test',
+        icon: 'Test',
+        path: 'flip-plugin',
         showOnHomePage: true,
         category: 'Test' }]
-
     };
   }
 
@@ -48,73 +63,34 @@ export class Main extends React.Component {
   }
 
   render() {
-    const { title } = this.props;
-    let addBasePath  = chrome.addBasePath;
-    let directories = [ { id: 1,
-      title: 'Test',
-      description: 'Test',
-      icon: 'Test',
-      path: 'Test',
-      showOnHomePage: true,
-      category: 'Test' }, { id: 2,
-        title: 'Test2',
-        description: 'Test',
-        icon: 'Test',
-        path: 'Test',
-        showOnHomePage: true,
-        category: 'Test' }, { id: 3,
-          title: 'Test3',
-          description: 'Test',
-          icon: 'Test',
-          path: 'Test',
-          showOnHomePage: true,
-          category: 'Test' },{ id: 4,
-            title: 'Test4',
-            description: 'Test',
-            icon: 'Test',
-            path: 'Test',
-            showOnHomePage: true,
-            category: 'Test' }, { id: 5,
-              title: 'Test5',
-              description: 'Test',
-              icon: 'Test',
-              path: 'Test',
-              showOnHomePage: true,
-              category: 'Test' }];
+    
+    const directories = this.props.directories;
 
     return (
+
+      <Router>
+        <Switch>
+          <Route path="/">
+            <Home
+              title="Kaliedioscope - An Introduction"
+              directories={directories} 
+            />
+          </Route>
+        </Switch>
+      </Router>
+    /*
       <EuiPage>
-        <EuiPageHeader>
-          <EuiTitle size="l">
-            <h1>{title} Hello World! Pradeep</h1>
-          </EuiTitle>
-        </EuiPageHeader>
-        <EuiPageBody>
-          <EuiPageContent>
-            <EuiPageContentHeader>
-              <EuiTitle>
-                <h2>Congratulations</h2>
-              </EuiTitle>
-            </EuiPageContentHeader>
-            <EuiPageContentBody>
-              <EuiText>
-                <h3>You've successfully created your first Kibana Plugin!</h3>
-                <p>The server time (via API call) is {this.state.time || 'NO API CALL YET'}</p>
-              </EuiText>
-            </EuiPageContentBody>
-          </EuiPageContent>
-        </EuiPageBody>
         <Roles
           addBasePath={addBasePath}
           directories={directories}
         />
-      </EuiPage>
+      </EuiPage>*/
     );
   }
 }
 
 Main.propTypes = {
-  addBasePath: true,
+  title: PropTypes.string.isRequired,
   directories: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -125,3 +101,4 @@ Main.propTypes = {
     category: PropTypes.string.isRequired
   }))
 };
+
