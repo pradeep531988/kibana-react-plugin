@@ -22,32 +22,6 @@ export class Main extends React.Component {
     super(props);
     console.log(this.props.directories);
     this.state = {
-
-      directories: [{ id: 1,
-        title: 'Dashboard',
-        description: 'Test',
-        icon: 'Test',
-        path: 'kibana#/dashboard',
-        showOnHomePage: true,
-        category: 'Test' }, { id: 2,
-        title: 'Discover',
-        description: 'Test',
-        icon: 'Test',
-        path: 'kibana#/discover',
-        showOnHomePage: true,
-        category: 'Test' }, { id: 3,
-        title: 'Visualize',
-        description: 'Test',
-        icon: 'Test',
-        path: 'kibana#/visualize',
-        showOnHomePage: true,
-        category: 'Test' }, { id: 4,
-        title: 'Monitoring',
-        description: 'Test',
-        icon: 'Test',
-        path: 'flip-plugin',
-        showOnHomePage: true,
-        category: 'Test' }]
     };
   }
 
@@ -72,8 +46,9 @@ export class Main extends React.Component {
         <Switch>
           <Route path="/">
             <Home
-              title="Kaliedioscope - An Introduction"
-              directories={directories} 
+              title="Welcome To Kaliedioscope"
+              projects={directories}  //Replace with project details
+              quickLinks={directories}   //Add the quick links append based on project
             />
           </Route>
         </Switch>
@@ -99,6 +74,11 @@ Main.propTypes = {
     path: PropTypes.string.isRequired,
     showOnHomePage: PropTypes.bool.isRequired,
     category: PropTypes.string.isRequired
+  })),
+  quickLinks: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
   }))
 };
 

@@ -1,0 +1,41 @@
+@import (reference) "~ui/styles/variables.less";
+
+.project {
+  display: flex;
+  flex-grow: 1;
+}
+
+.project:hover {
+  text-decoration: none;
+}
+
+.project:focus {
+  text-decoration: none;
+
+  .projectPanel {
+    border: solid 1px @globalColorBlue;
+  }
+
+  .projectBody {
+    text-decoration: none;
+  }
+}
+
+.projectTitle {
+  font-size: 16px;
+  font-weight: normal;
+  text-align: center;
+  color: @globalColorBlue;
+}
+
+.projectIcon {
+  padding-top: 8px;
+}
+
+.projectBody {
+  text-align: center;
+}
+
+.quickLinks {
+  text-align-last: center;
+}
