@@ -2,17 +2,6 @@
 import { FeatureCatalogueRegistryProvider, FeatureCatalogueCategory } from 'ui/registry/feature_catalogue';
 import { FlipConstants, DashboardConstants, VisualizeConstants } from '../const/flip_constants';
 
-FeatureCatalogueRegistryProvider.register(() => {
-  return {
-    id: 'dashboard',
-    title: 'Dashboard',
-    description: 'Display and share a collection of visualizations and saved searches.',
-    icon: '/plugins/kibana/assets/app_dashboard.svg',
-    path: `/app/kibana#${DashboardConstants.LANDING_PAGE_PATH}`,
-    showOnHomePage: true,
-    category: FeatureCatalogueCategory.DATA
-  };
-});
 
 FeatureCatalogueRegistryProvider.register(() => {
   return {
@@ -37,6 +26,20 @@ FeatureCatalogueRegistryProvider.register(() => {
     category: FeatureCatalogueCategory.DATA
   };
 });
+
+
+FeatureCatalogueRegistryProvider.register(() => {
+  return {
+    id: 'dashboard',
+    title: 'Dashboard',
+    description: 'Display and share a collection of visualizations and saved searches.',
+    icon: '/plugins/kibana/assets/app_dashboard.svg',
+    path: `/app/kibana#${DashboardConstants.LANDING_PAGE_PATH}`,
+    showOnHomePage: true,
+    category: FeatureCatalogueCategory.DATA
+  };
+});
+
 
 
 FeatureCatalogueRegistryProvider.register(() => {

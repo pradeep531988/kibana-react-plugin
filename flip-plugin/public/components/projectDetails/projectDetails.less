@@ -9,6 +9,14 @@
   text-decoration: none;
 }
 
+.projectLink {
+  margin: 4px;
+}
+
+.projectLink:hover {
+  text-decoration: underline;
+}
+
 .project:focus {
   text-decoration: none;
 
@@ -17,19 +25,28 @@
   }
 
   .projectBody {
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 
 .projectTitle {
+  background-color: #1C416B;
+  font-size: 16px;
+  font-weight: normal;
+  //text-align: center;
+  color: white;
+}
+
+.projectTitlePosition {
   font-size: 16px;
   font-weight: normal;
   text-align: center;
-  color: @globalColorBlue;
+  color: white;
+  justify-content: center;
 }
-
 .projectIcon {
-  padding-top: 8px;
+  border-radius: 5px;
+  align-self: flex-start;
 }
 
 .projectBody {

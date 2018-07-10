@@ -5,13 +5,14 @@ import {
   EuiFlexGroup,
   EuiFlexItem,
   EuiPanel,
-  EuiTitle
+  EuiTitle,
+  EuiTextColor
 } from '@elastic/eui';
 
  export default function QuickLinks({ iconUrl, title, url, wrapInPanel }) {
   const optionalImg = (
     <img
-      className="projectIcon"
+      className="projectQuickLinkIcon"
       src={iconUrl}
       alt=""
     />
@@ -21,18 +22,17 @@ import {
   const content = (
      
       <EuiFlexItem grow={true} className="quickLinkFlexItem">
-        <EuiTitle size="s">
-          <h4>
-            {optionalImg} {title}
-          </h4>
-        </EuiTitle>
+      {optionalImg}
+        <p>
+          {title}
+        </p>
       </EuiFlexItem>
   );
 
   let quickLinksDisplay = content;
   if (wrapInPanel) {
     quickLinksDisplay = (
-      <EuiPanel className="">
+      <EuiPanel>
         {content}
       </EuiPanel>
     );

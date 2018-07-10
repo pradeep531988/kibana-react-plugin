@@ -8,7 +8,7 @@ export default function (kibana) {
     uiExports: {
       
       app: {
-        title: 'Monitoring',
+        title: 'Home',
         description: 'This plugin is used to enhance the Kibana application with the option to display the projects based on roles and filter the dashboard with the roles',
         main: 'plugins/flip-plugin/app'
       },

@@ -1,4 +1,5 @@
 import './projectDetails.less';
+import projectLogo from '../../icons/projectLogo.png';
 import QuickLinks from  '../quickLinks/quickLinks';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -11,7 +12,8 @@ import {
   EuiTitle,
   EuiText,
   EuiTextColor,
-  EuiFlexGrid
+  EuiFlexGrid,
+  EuiSpacer
 } from '@elastic/eui';
 
 export class ProjectDetails extends React.Component {
@@ -27,15 +29,14 @@ export class ProjectDetails extends React.Component {
 
     const addBasePath  = chrome.addBasePath;
     const kbnBaseUrl = chrome.getInjected('kbnBaseUrl');
-    console.log('quickLinks' + this.state.quickLinks);
 
     return this.state.quickLinks
       .filter((directory) => {
-       return directory.showOnHomePage;
+        return directory.showOnHomePage;
       })
       .map((quickLink) => {
         return (
-          <EuiFlexItem>
+          <EuiFlexItem className="" >
             <QuickLinks
               iconUrl={addBasePath(quickLink.icon)}
               title={quickLink.title}
@@ -51,12 +52,13 @@ export class ProjectDetails extends React.Component {
 
 
   render() {
+
     let optionalImg;
     if (this.props.iconUrl) {
       optionalImg = (
         <img
           className="projectIcon"
-          src={this.props.iconUrl}
+          src={projectLogo}
           alt=""
         />
       );
@@ -64,39 +66,39 @@ export class ProjectDetails extends React.Component {
     const content = (
       <EuiFlexGroup responsive={true}>
         <EuiFlexItem className="projectContent" grow={true}>
-
-          <EuiTitle size="s" className="projectTitle">
-            <h4>
-              { optionalImg } {this.props.title}
-            </h4>
-          </EuiTitle>
-          <EuiText className="projectBody">
-            <p>
-              <EuiTextColor color="subdued">
-                {this.props.description}
-              </EuiTextColor>
-            </p>
-          </EuiText>
-          <EuiFlexGrid columns={2} gutterSize="s" className="quickLinks">
+          <a href={this.props.defaultNaviagationLink} className="projectLink">
+            <EuiTitle size="s" className="projectTitle">
+              <EuiFlexGrid gutterSize="s">
+                <EuiFlexItem>
+                  { optionalImg }
+                </EuiFlexItem>
+                <EuiFlexItem className="projectTitlePosition">
+                  {this.props.title}
+                </EuiFlexItem>
+              </EuiFlexGrid>
+            </EuiTitle>
+            <EuiSpacer size="l" />
+            <EuiText className="projectBody">
+              <p>
+                <EuiTextColor color="subdued">
+                  {this.props.description}
+                </EuiTextColor>
+              </p>
+            </EuiText>
+            <EuiSpacer size="m" />
+          </a>
+          <EuiFlexGrid columns={4} gutterSize="s" className="quickLinks">
             { this.renderQuickLinks(this.state.QuickLinks) }
           </EuiFlexGrid>
+          <EuiSpacer size="s" />
         </EuiFlexItem>
-        
       </EuiFlexGroup>
     );
 
-    let synopsisDisplay = content;
-    if (this.props.wrapInPanel) {
-      synopsisDisplay = (
-        <EuiPanel>
-          {content}
-        </EuiPanel>
-      );
-    }
 
     return (
       <div>
-        { synopsisDisplay }
+        { content }
       </div>
     );
   }

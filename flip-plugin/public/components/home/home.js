@@ -29,7 +29,7 @@ export class Home extends React.Component {
     super(props);
     console.log(props);
     this.state = {
-      
+
     };
   }
 
@@ -38,7 +38,7 @@ export class Home extends React.Component {
 
     const addBasePath  = chrome.addBasePath;
     const quickLinks = this.props.quickLinks;
-    
+
     return projects
       .map((project) => {
         const projectDetailWithLinks = (
@@ -48,10 +48,11 @@ export class Home extends React.Component {
               iconUrl={addBasePath(project.icon)}
               title={project.title}
               quickLinks={this.props.quickLinks}
+              defaultNaviagationLink={addBasePath('/app/kibana#/discover')}
             />
           </EuiFlexItem>
         );
-        console.log("quick Links"+ quickLinks);
+        console.log('quick Links' + quickLinks);
         return projectDetailWithLinks;
       });
   };
@@ -66,7 +67,7 @@ export class Home extends React.Component {
     const title = this.props.title;
     return (
       <EuiPage className="home">
-        <EuiSpacer size="s" />
+        { /* <EuiSpacer size="s" />
         <EuiFlexGroup
           justifyContent="flexEnd"
         >
@@ -78,7 +79,7 @@ export class Home extends React.Component {
               <option>DATA APPLICATION</option>
             </select>
           </EuiFlexItem>
-        </EuiFlexGroup>
+    </EuiFlexGroup> */}
 
         <EuiSpacer size="s" />
 
