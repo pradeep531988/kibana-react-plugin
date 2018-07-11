@@ -4,6 +4,9 @@ import '../../less/main.less';
 import PropTypes from 'prop-types';
 import { FlipConstants } from '../../const/flip_constants';
 import '../../const/feature_registry';
+import debounce from 'lodash/debounce';
+import $ from 'jquery';
+
 import {
   HashRouter as Router,
   Switch,
@@ -23,6 +26,11 @@ export class Main extends React.Component {
     console.log(this.props.directories);
     this.state = {
     };
+
+  }
+
+  hideHome() {
+    $('.active').css('display', 'none');
   }
 
   componentDidMount() {
@@ -34,10 +42,48 @@ export class Main extends React.Component {
     httpClient.get("../api/flip-plugin/example").then((resp) => {
       this.setState({ time: resp.data.time });
     });  */
+
+    // Select the node that will be observed for mutations
+    const targetNode = document.querySelector('.ng-isolate-scope');
+
+    // Options for the observer (which mutations to observe)
+    const config = { attributes: true, childList: true, subtree: true };
+
+    let isFlipLinkDisabled;
+    // Callback function to execute when mutations are observed
+    const callback = function (mutationsList) {
+      for(const mutation of mutationsList) {
+        const element = mutation.target;
+        if(element.className === 'global-nav-link  active' && $('.global-nav-link.active a[href$="flip-plugin"]')) {
+          $(element).css("display","none");
+          isFlipLinkDisabled = true;
+        }
+      }
+    };
+
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+
+    if (isFlipLinkDisabled) {
+    // Later, you can stop observing
+    observer.disconnect();
+    }
+    /*
+    $(window).on('load', function () {
+      alert('componentMounted');
+      console.log($('.active'));
+
+      console.log('LOADED');
+      $.ready.then(function () {
+        alert('Loaded');
+      });
+    });*/
   }
 
   render() {
-    
     const directories = this.props.directories;
 
     return (
