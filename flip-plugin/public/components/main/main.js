@@ -29,20 +29,37 @@ export class Main extends React.Component {
 
   }
 
-  hideHome() {
-    $('.active').css('display', 'none');
+  componentDidMount() {
+    const { httpClient } = this.props;
+    const updatedState = this;
+    let envConfig;
+    let projectList;
+
+
+    const projectFunc = function (projectDataURL) {
+      httpClient.get(projectDataURL).then((resp) => {
+        console.log(resp.data);
+        projectList = resp.data;
+        updatedState.setState({ projects: projectList });
+        //return projectList;
+      });
+    };
+
+    httpClient.get('../api/flip-plugin/config').then((resp) => {
+      envConfig = resp.data.envConfig;
+      if (envConfig === undefined) {
+        console.error('Unable to load flip configuation');
+        return false;
+      }
+      projectFunc(envConfig.projectDataURL);
+      //this.setState({ flipConfig: envConfig });
+    }).catch(function (e) {
+      console.log('error' + e);
+    });
+    
   }
 
-  componentDidMount() {
-    /*
-       FOR EXAMPLE PURPOSES ONLY.  There are much better ways to
-       manage state and update your UI than this.
-
-    const { httpClient } = this.props;
-    httpClient.get("../api/flip-plugin/example").then((resp) => {
-      this.setState({ time: resp.data.time });
-    });  */
-
+  componentDidMount1() {
     // Select the node that will be observed for mutations
     const targetNode = document.querySelector('.ng-isolate-scope');
 
@@ -55,8 +72,9 @@ export class Main extends React.Component {
       for(const mutation of mutationsList) {
         const element = mutation.target;
         if(element.className === 'global-nav-link  active' && $('.global-nav-link.active a[href$="flip-plugin"]')) {
-          $(element).css("display","none");
+          $(element).css('display', 'none');
           isFlipLinkDisabled = true;
+          break;
         }
       }
     };
@@ -69,7 +87,7 @@ export class Main extends React.Component {
 
     if (isFlipLinkDisabled) {
     // Later, you can stop observing
-    observer.disconnect();
+      observer.disconnect();
     }
     /*
     $(window).on('load', function () {
@@ -85,7 +103,8 @@ export class Main extends React.Component {
 
   render() {
     const directories = this.props.directories;
-
+    const projects = this.state.projects;
+    console.log(projects);
     return (
 
       <Router>
@@ -93,7 +112,7 @@ export class Main extends React.Component {
           <Route path="/">
             <Home
               title="Welcome To Kaliedioscope"
-              projects={directories}  //Replace with project details
+              projects={projects}  //Replace with project details
               quickLinks={directories}   //Add the quick links append based on project
             />
           </Route>
@@ -112,19 +131,16 @@ export class Main extends React.Component {
 
 Main.propTypes = {
   title: PropTypes.string.isRequired,
-  directories: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
-    path: PropTypes.string.isRequired,
-    showOnHomePage: PropTypes.bool.isRequired,
-    category: PropTypes.string.isRequired
-  })),
   quickLinks: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired,
+  })),
+  projects: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired
   }))
 };
 

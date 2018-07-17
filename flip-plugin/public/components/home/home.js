@@ -38,8 +38,10 @@ export class Home extends React.Component {
 
     const addBasePath  = chrome.addBasePath;
     const quickLinks = this.props.quickLinks;
-
-    return projects
+    if (projects === undefined) {
+      return  `Loading Projects`;
+    }
+    return projects 
       .map((project) => {
         const projectDetailWithLinks = (
           <EuiFlexItem style={{ minHeight: 190 }}  className="euiPanel" key={project.id}>
@@ -89,7 +91,7 @@ export class Home extends React.Component {
           </EuiTitle>
         </EuiPageHeader>
 
-        <EuiFlexGroup gutterSize="s">
+        <EuiFlexGroup gutterSize="s" className="applicationMain euiPanel euiPanel--paddingMedium">
           <EuiPanel paddingSize="s" style={{ border: 0 }}>
             <EuiTitle>
               <h3>

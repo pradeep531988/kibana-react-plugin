@@ -16,7 +16,7 @@ import {
   EuiSpacer
 } from '@elastic/eui';
 
-export class ProjectDetails extends React.Component {
+export class ProjectDetails extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +32,7 @@ export class ProjectDetails extends React.Component {
 
     return this.state.quickLinks
       .filter((directory) => {
-        return directory.showOnHomePage;
+        return (directory.showOnHomePage && directory.showAsQuickLinks);
       })
       .map((quickLink) => {
         return (

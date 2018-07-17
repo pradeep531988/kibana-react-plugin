@@ -5,3 +5,18 @@
     color: #16B1BB;
     font-weight: 600;
 }
+
+.applicationMain {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+@media only screen and (max-height: 760px) {
+    [class*="applicationMain"] {
+        max-height: 500px;
+    }
+}
+
+.home {
+    background-color: #F5F5F5;
+}

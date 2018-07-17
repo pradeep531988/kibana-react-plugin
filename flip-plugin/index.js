@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import exampleRoute from './server/routes/example';
+import serverRoutes from './server/routes/server';
 
 export default function (kibana) {
   return new kibana.Plugin({
@@ -30,7 +30,7 @@ export default function (kibana) {
     
     init(server, options) {
       // Add server routes and initialize the plugin here
-      exampleRoute(server);
+      serverRoutes(server);
     }
     
 
