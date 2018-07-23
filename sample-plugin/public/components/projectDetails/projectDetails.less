@@ -11,10 +11,12 @@
 
 .projectLink {
   margin: 4px;
+  border:none;
+  text-decoration:none;
 }
 
-.projectLink:hover {
-  text-decoration: underline;
+.projectLink:hover, .projectLink:click {
+  text-decoration: none;
 }
 
 .project:focus {
@@ -46,7 +48,16 @@
 }
 
 .projectBody {
-  text-align: center;
+  text-align: left;
+  padding-left: 10px;
+  min-height: 75px;
+  max-height: 75px;
+  overflow: hidden; //auto
+  text-overflow: ellipsis;
+}
+
+.projectBody > span {
+  text-overflow: ellipsis;
 }
 
 .quickLinks {

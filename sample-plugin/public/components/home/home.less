@@ -1,0 +1,34 @@
+@import (reference) "~ui/styles/variables.less";
+
+.appMainTitleHeader {
+    //color: @globalColorBlue;
+    color: #16B1BB;
+    font-weight: 600;
+}
+
+.applicationMain {
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #f5f5f0;
+}
+
+.activeApplication {
+    background-color: #cce4ed;
+    border-color: #005571;
+}
+@media only screen and (max-height: 760px) {
+    [class*="applicationMain"] {
+        max-height: 550px;
+    }
+}
+
+@media only screen and (min-height: 761px) {
+    [class*="applicationMain"] {
+        max-height: 780px;
+    }
+}
+
+.home, .app-wrapper {
+    //background-color: #F5F5F5;
+    background-color:white;
+}

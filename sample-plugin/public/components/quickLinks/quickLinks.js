@@ -9,7 +9,7 @@ import {
   EuiTextColor
 } from '@elastic/eui';
 
- export default function QuickLinks({ iconUrl, title, url, wrapInPanel }) {
+export default function QuickLinks({ iconUrl, title, url, projectName, wrapInPanel }) {
   const optionalImg = (
     <img
       className="projectQuickLinkIcon"
@@ -18,15 +18,18 @@ import {
     />
   );
 
+  function onProjectSelection(projectName, ele) {debugger;
+    localStorage.setItem('app', projectName);
+  }
 
   const content = (
-     
-      <EuiFlexItem grow={true} className="quickLinkFlexItem">
+
+    <EuiFlexItem grow={true} className="quickLinkFlexItem">
       {optionalImg}
-        <p>
-          {title}
-        </p>
-      </EuiFlexItem>
+      <p>
+        {title}
+      </p>
+    </EuiFlexItem>
   );
 
   let quickLinksDisplay = content;
@@ -45,6 +48,7 @@ import {
       href={url}
       className="euiLink synopsis"
       data-test-subj={`homeSynopsisLink${title.toLowerCase()}`}
+      onClick={onProjectSelection.bind(event, projectName)}
     >
       { quickLinksDisplay }
     </a>

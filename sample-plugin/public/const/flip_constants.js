@@ -25,3 +25,12 @@ export const DASHBOARD_GRID_COLUMN_COUNT = 12;
 export function createDashboardEditUrl(id) {
   return `/dashboard/${id}`;
 }
+
+export const PROJECT_NAME = 'FLIP PLUGIN';
+export const PROJECT_TITLE = 'Welcome To Kaliedioscope';
+export const PROJECT_SUCCESS_MESSAGE = 'Please select one of the application below';
+export const PROJECT_FAILURE_MESSAGE = 'Opps!!! Looks like something went wrong, Please Retry Loading the page again';
+export const PROJECT_NO_APP_AVAILABLE_MESSAGE_TITLE = 'No Application Available !';
+export const PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC1 = 'You are not having access to any application.';
+export const PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC2 = 'To know more, please contact your Admin Team.';
+

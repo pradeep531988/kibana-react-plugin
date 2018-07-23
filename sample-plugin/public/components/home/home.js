@@ -3,24 +3,20 @@ import PropTypes from 'prop-types';
 import { ProjectDetails } from '../projectDetails/projectDetails';
 import chrome from 'ui/chrome';
 import './home.less';
+import Info from '../info/info';
+import { PROJECT_NO_APP_AVAILABLE_MESSAGE_TITLE, PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC1,
+  PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC2 } from '../../const/flip_constants';
+//import $ from 'jquery';
 
 import {
   EuiPageHeader,
   EuiTitle,
-  EuiPageBody,
-  EuiPageContent,
-  EuiPageContentHeader,
-  EuiPageContentBody,
-  EuiText,
-  EuiTabs,
   EuiPage,
-  EuiTab,
   EuiFlexItem,
   EuiFlexGrid,
   EuiSpacer,
   EuiFlexGroup,
-  EuiPanel,
-  EuiTextColor
+  EuiPanel
 } from '@elastic/eui';
 
 export class Home extends React.Component {
@@ -32,6 +28,13 @@ export class Home extends React.Component {
 
     };
   }
+  componentDidMount() {
+    //$('.global-nav-link a[href$="flip-plugin"]').css('display', 'none');
+    if (localStorage.getItem('app')) {
+      $('#'+localStorage.getItem('app')).addClass('activeApplication');
+    }
+  }
+
 
 
   renderProjects = (projects) => {
@@ -39,13 +42,14 @@ export class Home extends React.Component {
     const addBasePath  = chrome.addBasePath;
     const quickLinks = this.props.quickLinks;
     if (projects === undefined) {
-      return  `Loading Projects`;
+      return;
     }
-    return projects 
+    return projects
       .map((project) => {
         const projectDetailWithLinks = (
-          <EuiFlexItem style={{ minHeight: 190 }}  className="euiPanel" key={project.id}>
+          <EuiFlexItem style={{ minHeight: 220 }}  className="euiPanel" key={project.id} id={project.id}>
             <ProjectDetails
+              key={project.id + 'projectId'}
               description={project.description}
               iconUrl={addBasePath(project.icon)}
               title={project.title}
@@ -54,18 +58,17 @@ export class Home extends React.Component {
             />
           </EuiFlexItem>
         );
-        console.log('quick Links' + quickLinks);
         return projectDetailWithLinks;
       });
   };
 
   render() {
-    const cardStyle = {
-      width: '250px',
-      'minWidth': '200px'
-    };
+    // const cardStyle = {
+    //   width: '250px',
+    //   'minWidth': '200px'
+    // };
 
-
+    const project = this.props.projects;
     const title = this.props.title;
     return (
       <EuiPage className="home">
@@ -91,20 +94,22 @@ export class Home extends React.Component {
           </EuiTitle>
         </EuiPageHeader>
 
-        <EuiFlexGroup gutterSize="s" className="applicationMain euiPanel euiPanel--paddingMedium">
-          <EuiPanel paddingSize="s" style={{ border: 0 }}>
-            <EuiTitle>
-              <h3>
-                    Please Select one of the Application
-              </h3>
-            </EuiTitle>
-            <EuiSpacer size="m"/>
-            <EuiFlexGrid columns={4}>
-              { this.renderProjects(this.props.projects) }
-            </EuiFlexGrid>
-          </EuiPanel>
-        </EuiFlexGroup>
-        <EuiSpacer size="s" />
+        { project.length > 0 ? (
+          <EuiFlexGroup gutterSize="s" className="applicationMain euiPanel euiPanel--paddingMedium">
+
+            <div paddingSize="s" >
+              <EuiTitle>
+                <h3>
+                  {this.props.projectTitle}
+                </h3>
+              </EuiTitle>
+              <EuiSpacer size="m"/>
+              <EuiFlexGrid columns={4}>
+                { this.renderProjects(project) }
+              </EuiFlexGrid>
+            </div>
+          </EuiFlexGroup>
+        ) : (<Info title={PROJECT_NO_APP_AVAILABLE_MESSAGE_TITLE} description1={PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC1} description2={PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC2}/>)}
       </EuiPage>
     );
   }
