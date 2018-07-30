@@ -11,11 +11,21 @@
 
 .projectLink {
   margin: 4px;
+  border:none;
+  text-decoration:none;
+  outline:none;
 }
 
-.projectLink:hover {
-  text-decoration: none;
+
+.projectLink div {
+  border: 0px;
 }
+
+.projectLink:hover, .quickLinkGrid > a:hover span{
+  //text-decoration: none;
+  text-decoration: underline;
+  }
+
 
 .project:focus {
   text-decoration: none;
@@ -46,9 +56,21 @@
 }
 
 .projectBody {
-  text-align: center;
+  text-align: left;
+  padding-left: 10px;
+  min-height: 73px;
+  max-height: 73px;
+  overflow: hidden; //auto
+  text-overflow: ellipsis;
+  outline:none;
+  border: 0px;
+}
+
+.projectBody > span {
+  text-overflow: ellipsis;
 }
 
 .quickLinks {
   text-align-last: center;
 }
+

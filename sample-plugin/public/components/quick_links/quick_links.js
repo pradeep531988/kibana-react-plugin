@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './quickLinks.less';
+import './quick_links.less';
 import {
   EuiFlexGroup,
   EuiFlexItem,
@@ -9,7 +9,7 @@ import {
   EuiTextColor
 } from '@elastic/eui';
 
-export default function QuickLinks({ iconUrl, title, url, wrapInPanel }) {
+export default function QuickLinks({ iconUrl, title, url, projectName, wrapInPanel }) {
   const optionalImg = (
     <img
       className="projectQuickLinkIcon"
@@ -18,6 +18,9 @@ export default function QuickLinks({ iconUrl, title, url, wrapInPanel }) {
     />
   );
 
+  function onProjectSelection(projectName, ele) {debugger;
+    localStorage.setItem('app', projectName);
+  }
 
   const content = (
 
@@ -45,6 +48,7 @@ export default function QuickLinks({ iconUrl, title, url, wrapInPanel }) {
       href={url}
       className="euiLink synopsis"
       data-test-subj={`homeSynopsisLink${title.toLowerCase()}`}
+      onClick={onProjectSelection.bind(this, projectName)}
     >
       { quickLinksDisplay }
     </a>

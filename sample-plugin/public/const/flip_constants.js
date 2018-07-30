@@ -27,7 +27,7 @@ export function createDashboardEditUrl(id) {
 }
 
 export const PROJECT_NAME = 'FLIP PLUGIN';
-export const PROJECT_TITLE = 'Welcome To Kaliedioscope';
+export const PROJECT_TITLE = 'Welcome To Kaledioscope';
 export const PROJECT_SUCCESS_MESSAGE = 'Please select one of the application below';
 export const PROJECT_FAILURE_MESSAGE = 'Opps!!! Looks like something went wrong, Please Retry Loading the page again';
 export const PROJECT_NO_APP_AVAILABLE_MESSAGE_TITLE = 'No Application Available !';

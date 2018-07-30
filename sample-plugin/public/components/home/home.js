@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { ProjectDetails } from '../projectDetails/projectDetails';
+import { ProjectDetails } from '../project_details/project_details';
 import chrome from 'ui/chrome';
 import './home.less';
 import Info from '../info/info';
 import { PROJECT_NO_APP_AVAILABLE_MESSAGE_TITLE, PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC1,
   PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC2 } from '../../const/flip_constants';
-//import $ from 'jquery';
+import { RecentlyAccessed, recentlyAccessedShape } from '../recently_accessed/recently_accessed';
+import { recentlyAccessed } from 'ui/persisted_log';
+
+import $ from 'jquery';
 
 import {
   EuiPageHeader,
@@ -16,23 +19,36 @@ import {
   EuiFlexGrid,
   EuiSpacer,
   EuiFlexGroup,
-  EuiPanel
+  EuiPanel,
+  EuiTextColor
 } from '@elastic/eui';
 
 export class Home extends React.Component {
+
 
   constructor(props) {
     super(props);
     console.log(props);
     this.state = {
 
+      /* recentlyAccessed: recentlyAccessed.get().map(item => {
+        item.link = chrome.addBasePath(item.link);
+        return item;
+      })*/
     };
   }
   componentDidMount() {
     //$('.global-nav-link a[href$="flip-plugin"]').css('display', 'none');
-    if (localStorage.getItem('app')) {
-      $('#'+localStorage.getItem('app')).addClass('activeApplication');
+    try {
+      if (localStorage.getItem('app')) {
+        $('#' + localStorage.getItem('app')).addClass('activeApplication');
+      }
+    }catch(e) {
+      console.log('unable to set style for application selected');
     }
+
+    console.log(this.state.recentlyAccessed);
+
   }
 
 
@@ -47,7 +63,7 @@ export class Home extends React.Component {
     return projects
       .map((project) => {
         const projectDetailWithLinks = (
-          <EuiFlexItem style={{ minHeight: 220 }}  className="euiPanel" key={project.id} id={project.id}>
+          <EuiFlexItem style={{ minHeight: 210, width: 190, minWidth: 190 }}  className="euiPanel" key={project.id} id={project.id}>
             <ProjectDetails
               key={project.id + 'projectId'}
               description={project.description}
@@ -62,11 +78,32 @@ export class Home extends React.Component {
       });
   };
 
+
+
   render() {
     // const cardStyle = {
     //   width: '250px',
     //   'minWidth': '200px'
     // };
+    const recentlyAccessed = [
+      {
+        label: 'my vis',
+        link: 'link_to_my_vis',
+        id: '1'
+      }
+    ]; //TODO: To make this dynamic
+
+    let recentlyAccessedPanel;
+    if (recentlyAccessed.length > 0) {
+      recentlyAccessedPanel = (
+        <Fragment>
+          <RecentlyAccessed
+            recentlyAccessed={recentlyAccessed}
+          />
+          <EuiSpacer size="l" />
+        </Fragment>
+      );
+    }
 
     const project = this.props.projects;
     const title = this.props.title;
@@ -86,8 +123,6 @@ export class Home extends React.Component {
           </EuiFlexItem>
     </EuiFlexGroup> */}
 
-        <EuiSpacer size="s" />
-
         <EuiPageHeader>
           <EuiTitle size="l" className="appMainTitleHeader">
             <h1>{title}</h1>
@@ -95,21 +130,30 @@ export class Home extends React.Component {
         </EuiPageHeader>
 
         { project.length > 0 ? (
-          <EuiFlexGroup gutterSize="s" className="applicationMain euiPanel euiPanel--paddingMedium">
+          <div>
+            <EuiFlexGroup gutterSize="s" className="applicationMain euiPanel euiPanel--paddingMedium">
 
-            <div paddingSize="s" >
-              <EuiTitle>
-                <h3>
-                  {this.props.projectTitle}
-                </h3>
-              </EuiTitle>
-              <EuiSpacer size="m"/>
-              <EuiFlexGrid columns={4}>
-                { this.renderProjects(project) }
-              </EuiFlexGrid>
-            </div>
-          </EuiFlexGroup>
-        ) : (<Info title={PROJECT_NO_APP_AVAILABLE_MESSAGE_TITLE} description1={PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC1} description2={PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC2}/>)}
+              <div >
+                <EuiTitle  size="s" className="subdued">
+                  <h4>
+                    <EuiTextColor color="subdued">
+                      {this.props.projectTitle}
+                    </EuiTextColor>
+                  </h4>
+                </EuiTitle>
+                <EuiSpacer size="s"/>
+                <EuiFlexGrid columns={4}>
+                  { this.renderProjects(project) }
+                </EuiFlexGrid>
+              </div>
+            </EuiFlexGroup>
+            <EuiSpacer size="m"/>
+            <EuiFlexGroup gutterSize="s" className="applicationMain euiPanel euiPanel--paddingMedium">
+              { recentlyAccessedPanel }
+            </EuiFlexGroup>
+          </div>
+        ) : (
+          <Info title={PROJECT_NO_APP_AVAILABLE_MESSAGE_TITLE} description1={PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC1} description2={PROJECT_NO_APP_AVAILABLE_MESSAGE_DESC2}/>)}
       </EuiPage>
     );
   }

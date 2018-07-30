@@ -11,7 +11,7 @@ import {
 } from '@elastic/eui';
 
 export default function Info({ title, description1, description2 }) {
-
+  localStorage.removeItem('app');
   return (
     <div>
 

@@ -1,9 +1,10 @@
-import './projectDetails.less';
+import './project_details.less';
 import projectLogo from '../../icons/projectLogo.png';
-import QuickLinks from  '../quickLinks/quickLinks';
+import QuickLinks from  '../quick_links/quick_links';
 import React from 'react';
 import PropTypes from 'prop-types';
 import chrome from 'ui/chrome';
+import $ from 'jquery';
 
 import {
   EuiFlexGroup,
@@ -25,7 +26,17 @@ export class ProjectDetails extends React.PureComponent {
     };
   }
 
-  renderQuickLinks = (quickLinks) => {
+  componentDidMount() {
+   // $('.projectContent a').attr('href', '#'); //TODO: Remove in next Sprint
+  }
+
+  onProjectSelection = ( projectName) => {
+    localStorage.setItem('app', projectName);
+  }
+
+
+
+  renderQuickLinks = (quickLinks, projectName) => {
 
     const addBasePath  = chrome.addBasePath;
     const kbnBaseUrl = chrome.getInjected('kbnBaseUrl');
@@ -36,11 +47,12 @@ export class ProjectDetails extends React.PureComponent {
       })
       .map((quickLink, index) => {
         return (
-          <EuiFlexItem className="dsp" key={index + 'quickLinkItem'} >
+          <EuiFlexItem className="quickLinkGrid" key={index + 'quickLinkItem'} >
             <QuickLinks
               iconUrl={addBasePath(quickLink.icon)}
               title={quickLink.title}
               url={addBasePath(quickLink.path)}
+              projectName={projectName}
               wrapInPanel={false}
             />
           </EuiFlexItem>
@@ -66,7 +78,7 @@ export class ProjectDetails extends React.PureComponent {
     const content = (
       <EuiFlexGroup responsive={true}>
         <EuiFlexItem className="projectContent" grow={true} >
-          <a href={this.props.defaultNaviagationLink} className="projectLink">
+          <a href={this.props.defaultNaviagationLink} className="projectLink" id={this.props.title} onClick={this.onProjectSelection.bind(this, this.props.title)}>
             <EuiTitle size="s" className="projectTitle">
               <EuiFlexGrid gutterSize="s">
                 <EuiFlexItem>
@@ -77,20 +89,17 @@ export class ProjectDetails extends React.PureComponent {
                 </EuiFlexItem>
               </EuiFlexGrid>
             </EuiTitle>
-            <EuiSpacer size="l" />
+            <EuiSpacer size="s" />
             <EuiText className="projectBody">
-              <p>
-                <EuiTextColor color="subdued">
-                  {this.props.description}
-                </EuiTextColor>
-              </p>
+              <EuiTextColor color="subdued">
+                {this.props.description}
+              </EuiTextColor>
             </EuiText>
-            <EuiSpacer size="m" />
+            <EuiSpacer size="s" />
           </a>
           <EuiFlexGrid columns={4} gutterSize="s" className="quickLinks">
-            { this.renderQuickLinks(this.state.QuickLinks) }
+            { this.renderQuickLinks(this.state.QuickLinks, this.props.title) }
           </EuiFlexGrid>
-          <EuiSpacer size="s" />
         </EuiFlexItem>
       </EuiFlexGroup>
     );

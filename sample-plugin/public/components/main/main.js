@@ -52,7 +52,7 @@ export class Main extends React.Component {
 }
 
 Main.propTypes = {
-  title: PropTypes.string.isRequired,
+  //title: PropTypes.string.isRequired,
   quickLinks: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired,
