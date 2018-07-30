@@ -1,0 +1,85 @@
+@import (reference) "~ui/styles/variables.less";
+
+.project {
+  display: flex;
+  flex-grow: 1;
+}
+
+.project:hover {
+  text-decoration: none;
+}
+
+.projectLink {
+  margin: 4px;
+  border:none;
+  text-decoration:none;
+  outline:none;
+}
+
+
+.projectLink div {
+  border: 0px;
+}
+
+.projectLink:hover, .quickLinkGrid > a:hover span{
+  //text-decoration: none;
+  text-decoration: underline;
+  }
+
+.projectTitleImage {
+  display: inline-table !important;
+}
+
+.project:focus {
+  text-decoration: none;
+  .projectPanel {
+    border: solid 1px @globalColorBlue;
+  }
+  .projectBody {
+    text-decoration: underline;
+  }
+}
+
+.projectTitle {
+  background-color: #005571;
+  font-size: 16px;
+  font-weight: normal;
+  color: white;
+  text-transform: uppercase;
+}
+
+.projectTitlePosition {
+  font-size: 16px;
+  font-weight: normal;
+  color: white;
+  justify-content: center;
+}
+.projectIcon {
+  border-radius: 5px;
+  align-self: flex-start;
+}
+
+.projectBody {
+  text-align: left;
+  padding-left: 10px;
+  min-height: 73px;
+  max-height: 73px;
+  overflow: hidden; //auto
+  text-overflow: ellipsis;
+  outline:none;
+  border: 0px;
+  line-height: 1.3;
+}
+
+.projectBody > span {
+  text-overflow: ellipsis;
+}
+
+.quickLinks {
+  text-align-last: center;
+}
+
+.euiFlexGrid--fourths.euiFlexGrid--gutterLarge > .euiFlexItem{ // TODO: To remove and make dynamic
+  -ms-flex-preferred-size: 22%;
+}
+

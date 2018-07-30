@@ -1,0 +1,45 @@
+@import (reference) "~ui/styles/variables.less";
+
+.appMainTitleHeader {
+    //color: @globalColorBlue;
+    color: #16B1BB;
+    font-weight: 600;
+}
+
+.applicationMain {
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #f5f5f0;
+}
+
+.projectPanel {
+    //-webkit-box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+    //box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+    background-color: #FFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    //-webkit-box-flex: 1;
+    //-ms-flex-positive: 1;
+    //flex-grow: 1;
+}
+
+.activeApplication {
+    background-color: #cce4ed;
+    border-color: #005571;
+}
+@media only screen and (max-height: 760px) {
+    [class*="applicationMain"] {
+        max-height: 490px;
+    }
+}
+
+@media only screen and (min-height: 761px) {
+    [class*="applicationMain"] {
+        max-height: 710px;
+    }
+}
+
+.home, .app-wrapper {
+    //background-color: #F5F5F5;
+    background-color:white;
+}
